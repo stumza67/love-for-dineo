@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Dineo ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: #3a0f1a;
+  position: relative;
+}
+
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: sparkle 2s linear infinite;
+}
+@keyframes sparkle {
+  0% { transform: translateY(0) scale(0.5); opacity: 0.8; }
+  50% { transform: translateY(-50px) scale(1); opacity: 0.3; }
+  100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+}
+
+.card {
+  background: rgba(255,255,255,0.95);
+  width: 90%;
+  max-width: 430px;
+  padding: 30px 26px 36px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.18);
+  position: relative;
+  z-index: 2;
+  animation: fadeIn 1.3s ease;
+}
+
+h1 { font-family: 'Playfair Display', serif; font-size: 2.3rem; margin-bottom: 6px; }
+h2 { font-weight: 400; margin-bottom: 14px; font-size: 1.05rem; opacity: 0.9; }
+
+.heart {
+  font-size: 2.6rem;
+  animation: pulse 1.4s infinite, twinkle 2s infinite alternate;
+  margin-bottom: 10px;
+}
+@keyframes pulse { 0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)} }
+@keyframes twinkle { 0%{opacity:1}50%{opacity:0.7; transform:scale(1.1)}100%{opacity:1} }
+
+.countdown { font-size: 0.9rem; margin-bottom: 18px; font-weight: 500; opacity: 0.85; }
+.message { font-size: 0.96rem; line-height: 1.65; margin-bottom: 22px; }
+button {
+  background: linear-gradient(135deg,#ff4d6d,#ff758f);
+  border:none;
+  color:white;
+  padding:13px 24px;
+  font-size:0.95rem;
+  border-radius:999px;
+  cursor:pointer;
+  box-shadow:0 10px 22px rgba(255,77,109,0.45);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+button:hover { transform: translateY(-2px); box-shadow:0 14px 30px rgba(255,77,109,0.55); }
+.hidden { display:none; margin-top:20px; font-size:0.96rem; animation:fadeIn 0.9s ease; }
+.signature { margin-top:16px; font-style:italic; opacity:0.85; }
+
+.floating-heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 1rem;
+  animation: floatUp linear infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0%{transform:translateY(0) rotate(0deg); opacity:1}
+  100%{transform:translateY(-120vh) rotate(360deg); opacity:0}
+}
+
+@keyframes fadeIn { from {opacity:0; transform:translateY(12px);} to {opacity:1; transform:translateY(0);} }
+</style>
+</head>
+<body>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/26/audio_8f0c5dbb5b.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <div class="heart">❤️</div>
+  <h1>Dineo</h1>
+  <h2>Happy Valentine’s Day</h2>
+  <div class="countdown" id="countdown"></div>
+
+  <p class="message">
+    Somewhere between all the noise of the world,<br>
+    there’s you — steady, kind, unforgettable.<br>
+    This little page exists for one reason only:<br>
+    to remind you how deeply you are loved.
+  </p>
+
+  <button onclick="reveal()">Tap for something real</button>
+
+  <div id="extra" class="hidden">
+    <p>
+      I don’t love you loudly — I love you surely.<br>
+      In quiet moments. In distance. In choice.<br>
+      If home were a person, it would be you.<br>
+      If forever had a name, it would be Dineo.
+    </p>
+    <div class="signature">— Always yours</div>
+  </div>
+</div>
+
+<script>
+// Play music & reveal message
+const music = document.getElementById('music');
+let started = false;
+function reveal() {
+  document.getElementById('extra').classList.remove('hidden');
+  if(!started) { music.volume = 0.6; music.play(); started = true; }
+}
+
+// Countdown
+const countdownEl = document.getElementById('countdown');
+const valentines = new Date(new Date().getFullYear(), 1, 14);
+function updateCountdown() {
+  const now = new Date();
+  const diff = valentines - now;
+  if(diff <= 0){ countdownEl.textContent = "It’s Valentine’s Day ❤️"; return; }
+  const days = Math.floor(diff / (1000*60*60*24));
+  countdownEl.textContent = `${days} day(s) until Valentine’s Day`;
+}
+updateCountdown();
+setInterval(updateCountdown,60000);
+
+// Floating hearts
+function createHeart(){
+  const heart = document.createElement('div');
+  heart.className = 'floating-heart';
+  heart.textContent = '❤️';
+  heart.style.left = Math.random()*100+'vw';
+  heart.style.fontSize=(0.8+Math.random()*1.2)+'rem';
+  heart.style.animationDuration=(4+Math.random()*6)+'s';
+  heart.style.opacity=0.6+Math.random()*0.4;
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),12000);
+}
+setInterval(createHeart,300);
+
+// Sparkles
+function createSparkle(){
+  const s = document.createElement('div');
+  s.className='sparkle';
+  s.style.left=Math.random()*100+'vw';
+  s.style.top=Math.random()*100+'vh';
+  s.style.animationDuration=(1+Math.random()*2)+'s';
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),2000);
+}
+setInterval(createSparkle,100);
+</script>
+
+</body>
+</html>
